@@ -35,4 +35,6 @@ export class DateFormatPipe implements PipeTransform {
         return date.toLocaleDateString('fr-MA');
     }
   }
+
+  
 }
