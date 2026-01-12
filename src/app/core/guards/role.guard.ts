@@ -23,4 +23,6 @@ export const roleGuard: CanActivateFn = (route, state) => {
   console.warn(`Accès refusé. Rôle requis: ${requiredRole}, Rôle utilisateur: ${userRole}`);
   authService.redirectByRole();
   return false;
+
+  
 };
