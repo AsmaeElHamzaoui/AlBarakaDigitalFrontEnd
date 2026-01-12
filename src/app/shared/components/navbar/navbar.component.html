@@ -1,1 +1,80 @@
-<h1>hello</h1>
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="navbar-brand">
+      <a routerLink="/" class="logo">
+        <span class="logo-text">Al Baraka</span>
+        <span class="logo-digital">Digital</span>
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="navbar-menu" *ngIf="currentUser$ | async as user">
+      <!-- Client Navigation -->
+      <ng-container *ngIf="userRole === Role.CLIENT">
+        <a routerLink="/client/dashboard" 
+           class="nav-link"
+           [class.active]="isActive('/client/dashboard')">
+          <i class="icon-dashboard"></i>
+          Tableau de bord
+        </a>
+        <a routerLink="/client/operations" 
+           class="nav-link"
+           [class.active]="isActive('/client/operations')">
+          <i class="icon-operations"></i>
+          Opérations
+        </a>
+        <a routerLink="/client/account" 
+           class="nav-link"
+           [class.active]="isActive('/client/account')">
+          <i class="icon-account"></i>
+          Mon compte
+        </a>
+      </ng-container>
+
+      <!-- Agent Navigation -->
+      <ng-container *ngIf="userRole === Role.AGENT_BANCAIRE">
+        <a routerLink="/agent/dashboard" 
+           class="nav-link"
+           [class.active]="isActive('/agent/dashboard')">
+          <i class="icon-dashboard"></i>
+          Tableau de bord
+        </a>
+        <a routerLink="/agent/pending-operations" 
+           class="nav-link"
+           [class.active]="isActive('/agent/pending-operations')">
+          <i class="icon-pending"></i>
+          Opérations en attente
+        </a>
+      </ng-container>
+
+      <!-- Admin Navigation -->
+      <ng-container *ngIf="userRole === Role.ADMIN">
+        <a routerLink="/admin/dashboard" 
+           class="nav-link"
+           [class.active]="isActive('/admin/dashboard')">
+          <i class="icon-dashboard"></i>
+          Tableau de bord
+        </a>
+        <a routerLink="/admin/users" 
+           class="nav-link"
+           [class.active]="isActive('/admin/users')">
+          <i class="icon-users"></i>
+          Utilisateurs
+        </a>
+      </ng-container>
+    </div>
+
+    <!-- User Menu -->
+    <div class="navbar-user" *ngIf="currentUser$ | async">
+      <div class="user-info">
+        <span class="user-email">{{ userEmail }}</span>
+        <span class="user-role">{{ userRole }}</span>
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        <i class="icon-logout"></i>
+        Déconnexion
+      </button>
+    </div>
+  </div>
+</nav>

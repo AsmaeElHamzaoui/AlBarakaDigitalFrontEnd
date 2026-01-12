@@ -12,5 +12,25 @@ import { Role } from '../../../core/models/role.enum';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  currentUser$ = this.authService.currentUser$;
+  Role = Role;
+
+  get userEmail(): string | null {
+    return this.authService.getUserEmail();
+  }
+
+  get userRole(): Role | null {
+    return this.authService.getUserRole();
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
+  }
 }
