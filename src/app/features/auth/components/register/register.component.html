@@ -1,0 +1,122 @@
+<div class="register-container">
+  <div class="register-card">
+    <!-- Header -->
+    <div class="register-header">
+      <div class="logo">
+        <span class="logo-text">Al Baraka</span>
+        <span class="logo-digital">Digital</span>
+      </div>
+      <h2>Inscription</h2>
+      <p class="subtitle">Créez votre compte bancaire</p>
+    </div>
+
+    <!-- Alert succès -->
+    <app-alert 
+      *ngIf="showSuccess"
+      type="success"
+      [message]="successMessage"
+      [dismissible]="false">
+    </app-alert>
+
+    <!-- Alert d'erreur -->
+    <app-alert 
+      *ngIf="showError"
+      type="error"
+      [message]="errorMessage"
+      [dismissible]="true"
+      (closed)="showError = false">
+    </app-alert>
+
+    <!-- Formulaire d'inscription -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Nom complet -->
+      <div class="form-group">
+        <label for="fullName">Nom complet</label>
+        <input 
+          type="text" 
+          id="fullName"
+          formControlName="fullName"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('fullName')"
+          placeholder="Ahmed Ben Ali"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('fullName')">
+          {{ getFieldError('fullName') }}
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('email')"
+          placeholder="ahmed@example.com"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('email')">
+          {{ getFieldError('email') }}
+        </div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('password')"
+          placeholder="••••••••"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('password')">
+          {{ getFieldError('password') }}
+        </div>
+        <div class="password-hint">
+          Le mot de passe doit contenir : 8 caractères min, une majuscule, une minuscule, un chiffre et un caractère spécial
+        </div>
+      </div>
+
+      <!-- Confirmation mot de passe -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input 
+          type="password" 
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('confirmPassword') || passwordMismatch"
+          placeholder="••••••••"
+        />
+        <div class="error-message" *ngIf="passwordMismatch">
+          Les mots de passe ne correspondent pas
+        </div>
+      </div>
+
+      <!-- Bouton d'inscription -->
+      <button 
+        type="submit" 
+        class="btn-register"
+        [disabled]="isLoading"
+      >
+        <app-loading-spinner 
+          *ngIf="isLoading" 
+          [isLoading]="true" 
+          size="small">
+        </app-loading-spinner>
+        <span *ngIf="!isLoading">S'inscrire</span>
+      </button>
+
+      <!-- Lien de connexion -->
+      <div class="form-footer">
+        <p>
+          Vous avez déjà un compte ? 
+          <a routerLink="/auth/login" class="link-login">Se connecter</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
