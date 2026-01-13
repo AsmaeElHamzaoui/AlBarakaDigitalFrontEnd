@@ -1,0 +1,81 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Header -->
+    <div class="login-header">
+      <div class="logo">
+        <span class="logo-text">Al Baraka</span>
+        <span class="logo-digital">Digital</span>
+      </div>
+      <h2>Connexion</h2>
+      <p class="subtitle">Accédez à votre espace bancaire</p>
+    </div>
+
+    <!-- Alert d'erreur -->
+    <app-alert 
+      *ngIf="showError"
+      type="error"
+      [message]="errorMessage"
+      [dismissible]="true"
+      (closed)="showError = false">
+    </app-alert>
+
+    <!-- Formulaire de connexion -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('email')"
+          placeholder="exemple@albaraka.ma"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('email')">
+          {{ getFieldError('email') }}
+        </div>
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('password')"
+          placeholder="••••••••"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('password')">
+          {{ getFieldError('password') }}
+        </div>
+      </div>
+
+      <!-- Bouton de connexion -->
+      <button 
+        type="submit" 
+        class="btn-login"
+        [disabled]="isLoading"
+      >
+        <app-loading-spinner 
+          *ngIf="isLoading" 
+          [isLoading]="true" 
+          size="small">
+        </app-loading-spinner>
+        <span *ngIf="!isLoading">Se connecter</span>
+      </button>
+
+      <!-- Lien d'inscription -->
+      <div class="form-footer">
+        <p>
+          Pas encore de compte ? 
+          <a routerLink="/auth/register" class="link-register">S'inscrire</a>
+        </p>
+        <a routerLink="/auth/oauth2-login" class="link-oauth2">
+          Connexion OAuth2 (Keycloak)
+        </a>
+      </div>
+    </form>
+  </div>
