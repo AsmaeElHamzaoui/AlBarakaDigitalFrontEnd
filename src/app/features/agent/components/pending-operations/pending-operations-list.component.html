@@ -1,0 +1,48 @@
+<div class="pending-container">
+  <h1>📋 Opérations en attente</h1>
+
+  <app-loading-spinner
+    *ngIf="isLoading"
+    [isLoading]="true"
+    message="Chargement...">
+  </app-loading-spinner>
+
+  <table *ngIf="!isLoading && operations.length > 0">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Client</th>
+        <th>Type</th>
+        <th>Montant</th>
+        <th>Justificatif</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let op of operations">
+        <td>{{ op.dateOperation | dateFormat:'datetime' }}</td>
+        <td>{{ op.clientEmail }}</td>
+        <td>{{ op.type }}</td>
+        <td>{{ op.montant | currencyFormat }}</td>
+        <td>
+          <button
+            *ngIf="op.justificatifPath"
+            class="btn btn-doc"
+            (click)="downloadDocument(op.id)">
+            📄 Voir
+          </button>
+          <span *ngIf="!op.justificatifPath">-</span>
+        </td>
+        <td class="actions">
+          <button class="btn approve" (click)="approve(op.id)">✔</button>
+          <button class="btn reject" (click)="reject(op.id)">✖</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && operations.length === 0">
+    Aucune opération en attente
+  </p>
+</div>
