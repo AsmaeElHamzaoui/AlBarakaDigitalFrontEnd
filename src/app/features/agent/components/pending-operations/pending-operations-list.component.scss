@@ -1,0 +1,52 @@
+.pending-container {
+  padding: 2rem;
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f8f9fa;
+      text-align: left;
+    }
+
+    .actions {
+      display: flex;
+      gap: .5rem;
+    }
+  }
+
+  .btn {
+    border: none;
+    padding: .4rem .8rem;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &.approve {
+      background: #28a745;
+      color: white;
+    }
+
+    &.reject {
+      background: #dc3545;
+      color: white;
+    }
+
+    &.btn-doc {
+      background: #17a2b8;
+      color: white;
+    }
+  }
+}
