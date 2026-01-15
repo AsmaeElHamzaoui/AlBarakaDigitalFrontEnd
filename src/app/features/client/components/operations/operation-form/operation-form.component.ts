@@ -64,6 +64,7 @@ import { LoadingSpinnerComponent } from '../../../../../shared/components/loadin
     </form>
   `,
   styles: [`
+    
     .form-group {
       margin-bottom: 1.5rem;
     }
