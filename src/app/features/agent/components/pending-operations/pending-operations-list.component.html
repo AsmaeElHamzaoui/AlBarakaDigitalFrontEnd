@@ -22,7 +22,7 @@
     <tbody>
       <tr *ngFor="let op of operations">
         <td>{{ op.dateOperation | dateFormat:'datetime' }}</td>
-        <td>{{ op.clientEmail }}</td>
+        <!-- <td>{{ op.clientEmail }}</td> -->
         <td>{{ op.type }}</td>
         <td>{{ op.montant | currencyFormat }}</td>
         <td>
