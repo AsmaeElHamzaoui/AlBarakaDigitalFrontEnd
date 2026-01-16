@@ -5,20 +5,12 @@
   </div>
 
   <!-- Alert d'erreur -->
-  <app-alert 
-    *ngIf="showError"
-    type="error"
-    [message]="errorMessage"
-    [dismissible]="true"
-    (closed)="showError = false">
+  <app-alert *ngIf="showError" type="error" [message]="errorMessage" [dismissible]="true" (closed)="showError = false">
   </app-alert>
 
   <!-- Informations du compte -->
   <div class="account-card">
-    <app-loading-spinner 
-      *ngIf="isLoadingAccount" 
-      [isLoading]="true"
-      message="Chargement des informations du compte...">
+    <app-loading-spinner *ngIf="isLoadingAccount" [isLoading]="true" message="Chargement des informations du compte...">
     </app-loading-spinner>
 
     <div *ngIf="!isLoadingAccount && account" class="account-content">
@@ -26,7 +18,7 @@
         <h2>Mon Compte</h2>
         <span class="account-number">{{ account.numeroCompte }}</span>
       </div>
-      
+
       <div class="account-balance">
         <span class="balance-label">Solde disponible</span>
         <span class="balance-amount">{{ account.solde | currencyFormat:account.devise }}</span>
@@ -53,10 +45,7 @@
       <a routerLink="/client/operations" class="link-view-all">Voir tout →</a>
     </div>
 
-    <app-loading-spinner 
-      *ngIf="isLoadingOperations" 
-      [isLoading]="true"
-      message="Chargement des opérations...">
+    <app-loading-spinner *ngIf="isLoadingOperations" [isLoading]="true" message="Chargement des opérations...">
     </app-loading-spinner>
 
     <div *ngIf="!isLoadingOperations" class="operations-list">
@@ -69,12 +58,12 @@
         <div class="operation-icon" [ngClass]="operation.type.toLowerCase()">
           {{ operation.type === 'DEPOT' ? '💰' : operation.type === 'RETRAIT' ? '💸' : '🔄' }}
         </div>
-        
+
         <div class="operation-details">
           <span class="operation-type">{{ operation.type }}</span>
           <span class="operation-date">{{ operation.dateOperation | dateFormat:'datetime' }}</span>
         </div>
-        
+
         <div class="operation-amount">
           <span class="amount">{{ operation.montant | currencyFormat }}</span>
           <span class="status" [ngClass]="getStatusClass(operation.statut)">
@@ -99,9 +88,7 @@
       <div class="stat-icon">⏳</div>
       <div class="stat-content">
         <span class="stat-label">En attente</span>
-        <span class="stat-value">
-          {{ (recentOperations | filter:'statut':OperationStatus.PENDING).length }}
-        </span>
+        <span class="stat-value">{{ pendingCount }}</span>
       </div>
     </div>
 
@@ -109,10 +96,9 @@
       <div class="stat-icon">✓</div>
       <div class="stat-content">
         <span class="stat-label">Approuvées</span>
-        <span class="stat-value">
-          {{ (recentOperations | filter:'statut':OperationStatus.APPROVED).length }}
-        </span>
+        <span class="stat-value">{{ approvedCount }}</span>
       </div>
     </div>
+
   </div>
 </div>

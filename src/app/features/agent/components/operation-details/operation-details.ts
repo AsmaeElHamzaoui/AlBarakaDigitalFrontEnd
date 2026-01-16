@@ -1,11 +1,17 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { AgentOperationService } from '../../services/agent-operation.service';
 import { OperationResponseDTO } from '../../../client/models/operation.model';
+import { DocumentViewerComponent } from '../document-viewer/document-viewer'; 
 
 @Component({
   selector: 'app-operation-details',
   standalone: true,
+  imports: [
+    CommonModule,            // ⭐ POUR *ngIf
+    DocumentViewerComponent  // ⭐ POUR <app-document-viewer>
+  ],
   template: `
     <div *ngIf="operation">
       <h2>Détails opération #{{ operation.id }}</h2>
