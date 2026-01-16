@@ -99,4 +99,17 @@ export class DashboardComponent implements OnInit {
         return status;
     }
   }
+
+  get pendingCount(): number {
+  return this.recentOperations.filter(
+    op => op.statut === OperationStatus.PENDING
+  ).length;
+}
+
+get approvedCount(): number {
+  return this.recentOperations.filter(
+    op => op.statut === OperationStatus.APPROVED
+  ).length;
+}
+
 }
