@@ -31,10 +31,16 @@ export class AgentOperationService {
     );
   }
 
-  downloadDocument(operationId: number): Observable<Blob> {
-    return this.http.get(
-      `${this.API_URL}/${operationId}/document`,
-      { responseType: 'blob' }
-    );
-  }
+downloadDocument(operationId: number) {
+  console.log('📡 [SERVICE] Appel downloadDocument, operationId =', operationId);
+
+  return this.http.get(
+    `${environment.apiUrl}/api/agent/operations/${operationId}/document`,
+    {
+      responseType: 'blob'
+    }
+  );
+}
+
+
 }

@@ -26,4 +26,7 @@ export interface OperationResponseDTO {
   createdAt: string;
   accountSource: string;
   accountDestination?: string;
+  justificatifPath?: string;
+  clientEmail?: string;
+  hasDocument?: boolean;
 }
