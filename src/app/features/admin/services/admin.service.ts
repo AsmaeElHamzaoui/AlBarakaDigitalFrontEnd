@@ -10,7 +10,7 @@ import { UserResponseDTO } from '../../../core/models/user.model';
 export class AdminService {
 
   private http = inject(HttpClient);
-  private API = `${environment.apiUrl}/admin/users`;
+  private API = `${environment.apiUrl}/api/admin/users`;
 
   getAllUsers(): Observable<UserResponseDTO[]> {
     return this.http.get<UserResponseDTO[]>(this.API);
