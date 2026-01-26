@@ -10,7 +10,7 @@ import { OperationResponseDTO } from '../../client/models/operation.model';
 export class AgentOperationService {
 
   private http = inject(HttpClient);
-  private readonly API_URL = `${environment.apiUrl}/agent/operations`;
+  private readonly API_URL = `${environment.apiUrl}/api/agent/operations`;
 
   // opérations en attente
   getPendingOperations(): Observable<OperationResponseDTO[]> {
