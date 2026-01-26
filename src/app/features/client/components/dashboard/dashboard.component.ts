@@ -61,10 +61,7 @@ export class DashboardComponent implements OnInit {
   loadRecentOperations(): void {
     this.operationService.getMyOperations().subscribe({
       next: (operations) => {
-        // Trier par date décroissante et prendre les 5 dernières
-        this.recentOperations = operations
-          .sort((a, b) => new Date(b.dateOperation).getTime() - new Date(a.dateOperation).getTime())
-          .slice(0, 5);
+        
         this.isLoadingOperations = false;
       },
       error: (error) => {
@@ -102,13 +99,13 @@ export class DashboardComponent implements OnInit {
 
   get pendingCount(): number {
   return this.recentOperations.filter(
-    op => op.statut === OperationStatus.PENDING
+    op => op.status === OperationStatus.PENDING
   ).length;
 }
 
 get approvedCount(): number {
   return this.recentOperations.filter(
-    op => op.statut === OperationStatus.APPROVED
+    op => op.status === OperationStatus.APPROVED
   ).length;
 }
 

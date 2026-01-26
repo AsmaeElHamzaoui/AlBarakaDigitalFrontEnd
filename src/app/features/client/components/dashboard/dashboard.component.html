@@ -16,12 +16,12 @@
     <div *ngIf="!isLoadingAccount && account" class="account-content">
       <div class="account-header">
         <h2>Mon Compte</h2>
-        <span class="account-number">{{ account.numeroCompte }}</span>
+        <span class="account-number">{{ account.accountNumber }}</span>
       </div>
 
       <div class="account-balance">
         <span class="balance-label">Solde disponible</span>
-        <span class="balance-amount">{{ account.solde | currencyFormat:account.devise }}</span>
+        <span class="balance-amount">{{ account.balance }}</span>
       </div>
 
       <div class="account-actions">
@@ -56,18 +56,17 @@
 
       <div *ngFor="let operation of recentOperations" class="operation-item">
         <div class="operation-icon" [ngClass]="operation.type.toLowerCase()">
-          {{ operation.type === 'DEPOT' ? '💰' : operation.type === 'RETRAIT' ? '💸' : '🔄' }}
+          {{ operation.type === 'DEPOSIT' ? '💰' : operation.type === 'WITHDRAWAL' ? '💸' : '🔄' }}
         </div>
 
         <div class="operation-details">
           <span class="operation-type">{{ operation.type }}</span>
-          <span class="operation-date">{{ operation.dateOperation | dateFormat:'datetime' }}</span>
         </div>
 
         <div class="operation-amount">
-          <span class="amount">{{ operation.montant | currencyFormat }}</span>
-          <span class="status" [ngClass]="getStatusClass(operation.statut)">
-            {{ getStatusLabel(operation.statut) }}
+          <span class="amount">{{ operation.amount | currencyFormat }}</span>
+          <span class="status" [ngClass]="getStatusClass(operation.status)">
+            {{ getStatusLabel(operation.status) }}
           </span>
         </div>
       </div>

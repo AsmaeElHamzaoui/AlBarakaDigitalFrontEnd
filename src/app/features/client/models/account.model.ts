@@ -1,24 +1,22 @@
 export interface Account {
   id: number;
   numeroCompte: string;
-  solde: number;
-  devise: string;
+  balance: number;
   dateCreation: Date;
   actif: boolean;
 }
 
 export interface AccountRequestDTO {
-  numeroCompte: string;
-  devise: string;
-  soldeInitial: number;
+  accountNumber: string;
+  balance: number;
 }
 
 export interface AccountResponseDTO {
   id: number;
-  numeroCompte: string;
-  solde: number;
-  devise: string;
-  dateCreation: Date;
-  actif: boolean;
+  accountNumber: string;
+  balance: number;
+  currency: string;
+  creationDate: string;
+  active: boolean;
   ownerEmail: string;
 }
