@@ -284,7 +284,7 @@ export class TransferComponent implements OnInit {
       compteDestinataireNumero: ['', [
         Validators.required,
         Validators.minLength(12),
-        Validators.pattern(/^\d+$/)
+        //Validators.pattern(/^\d+$/)
       ]],
       montant: ['', [
         Validators.required,
@@ -336,8 +336,8 @@ export class TransferComponent implements OnInit {
     this.showSuccess = false;
 
     const operationRequest = {
-      type: OperationType.VIREMENT,
-      montant: this.transferForm.value.montant,
+      type: OperationType.WITHDRAWAL,
+      amount: this.transferForm.value.montant,
       description: this.transferForm.value.description || undefined,
       compteDestinataireNumero: this.transferForm.value.compteDestinataireNumero
     };
@@ -413,9 +413,9 @@ export class TransferComponent implements OnInit {
     if (field?.hasError('minlength')) {
       return 'Le numéro de compte doit contenir au moins 12 chiffres';
     }
-    if (field?.hasError('pattern')) {
-      return 'Le numéro de compte ne doit contenir que des chiffres';
-    }
+    // if (field?.hasError('pattern')) {
+    //   return 'Le numéro de compte ne doit contenir que des chiffres';
+    // }
     if (field?.hasError('positiveAmount')) {
       return 'Le montant doit être supérieur à 0';
     }

@@ -1,8 +1,9 @@
 export enum OperationType {
-  DEPOT = 'DEPOT',
-  RETRAIT = 'RETRAIT',
-  VIREMENT = 'VIREMENT'
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
+  TRANSFER = 'TRANSFER'
 }
+
 
 export enum OperationStatus {
   PENDING = 'PENDING',

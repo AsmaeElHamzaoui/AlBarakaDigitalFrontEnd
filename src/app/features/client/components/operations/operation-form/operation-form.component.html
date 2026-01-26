@@ -1,0 +1,25 @@
+<form [formGroup]="operationForm" (ngSubmit)="submit()">
+
+  <!-- TYPE -->
+  <label>Type d’opération</label>
+  <select formControlName="type">
+    <option [value]="OperationType.DEPOSIT">Dépôt</option>
+    <option [value]="OperationType.WITHDRAWAL">Retrait</option>
+    <option [value]="OperationType.TRANSFER">Virement</option>
+  </select>
+
+  <!-- MONTANT -->
+  <label>Montant</label>
+  <input type="number" formControlName="amount">
+
+  <!-- DESTINATION (ONLY TRANSFER) -->
+  <div *ngIf="operationForm.get('type')?.value === OperationType.TRANSFER">
+    <label>Compte destination</label>
+    <input type="text" formControlName="destinationAccountNumber">
+  </div>
+
+  <button type="submit" [disabled]="operationForm.invalid">
+    Valider l’opération
+  </button>
+
+</form>

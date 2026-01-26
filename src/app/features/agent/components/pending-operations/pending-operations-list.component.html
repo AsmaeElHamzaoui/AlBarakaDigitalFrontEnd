@@ -21,18 +21,17 @@
 
     <tbody>
       <tr *ngFor="let op of operations">
-        <td>{{ op.dateOperation | dateFormat:'datetime' }}</td>
         <!-- <td>{{ op.clientEmail }}</td> -->
         <td>{{ op.type }}</td>
-        <td>{{ op.montant | currencyFormat }}</td>
+        <td>{{ op.amount | currencyFormat }}</td>
         <td>
-          <button
+          <!-- <button
             *ngIf="op.justificatifPath"
             class="btn btn-doc"
             (click)="downloadDocument(op.id)">
             📄 Voir
-          </button>
-          <span *ngIf="!op.justificatifPath">-</span>
+          </button> -->
+          <!-- <span *ngIf="!op.justificatifPath">-</span> -->
         </td>
         <td class="actions">
           <button class="btn approve" (click)="approve(op.id)">✔</button>

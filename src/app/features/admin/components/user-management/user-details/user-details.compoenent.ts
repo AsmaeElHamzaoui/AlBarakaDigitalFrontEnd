@@ -1,11 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../../services/admin.service';
 import { UserResponseDTO } from '../../../../../core/models/user.model';
+import { LoadingSpinnerComponent } from '../../../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
+  imports: [CommonModule, LoadingSpinnerComponent],
   template: `
     <div *ngIf="user">
       <h2>Détails utilisateur</h2>

@@ -9,16 +9,16 @@ import { CurrencyFormatPipe } from '../../../../../shared/pipes/currency-format.
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format.pipe';
 
 @Component({
-    selector: 'app-operation-list',
-    standalone: true,
-    imports: [
-        CommonModule,
-        RouterLink,
-        LoadingSpinnerComponent,
-        CurrencyFormatPipe,
-        DateFormatPipe
-    ],
-    template: `
+  selector: 'app-operation-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    LoadingSpinnerComponent,
+    CurrencyFormatPipe,
+    DateFormatPipe
+  ],
+  template: `
     <div class="operation-list-container">
       <div class="header">
         <h1>Mes opérations</h1>
@@ -54,24 +54,20 @@ import { DateFormatPipe } from '../../../../../shared/pipes/date-format.pipe';
           </thead>
           <tbody>
             <tr *ngFor="let operation of operations">
-              <td>{{ operation.dateOperation | dateFormat:'datetime' }}</td>
+            <td>{{ operation.createdAt | dateFormat:'datetime' }}</td>
+             <td class="amount">{{ operation.amount | currencyFormat }}</td>
+             <td>{{ operation.status }}</td>
+
               <td>
                 <span class="badge" [ngClass]="'badge-' + operation.type.toLowerCase()">
                   {{ operation.type }}
                 </span>
               </td>
-              <td class="amount">{{ operation.montant | currencyFormat }}</td>
-              <td>{{ operation.description || '-' }}</td>
+              <td class="amount">{{ operation.amount | currencyFormat }}</td>
               <td>
-                <span class="status" [ngClass]="getStatusClass(operation.statut)">
-                  {{ getStatusLabel(operation.statut) }}
+                <span class="status" [ngClass]="getStatusClass(operation.status)">
+                  {{ getStatusLabel(operation.status) }}
                 </span>
-              </td>
-              <td>
-                <span *ngIf="operation.justificatifPath" class="has-doc">📄 Oui</span>
-                 <td>
-                <span *ngIf="operation.justificatifPath" class="has-doc">📄 Oui</span>
-                <span *ngIf="!operation.justificatifPath" class="no-doc">-</span>
               </td>
             </tr>
           </tbody>
@@ -79,7 +75,7 @@ import { DateFormatPipe } from '../../../../../shared/pipes/date-format.pipe';
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .operation-list-container {
       padding: 2rem;
       max-width: 1400px;
@@ -256,45 +252,45 @@ import { DateFormatPipe } from '../../../../../shared/pipes/date-format.pipe';
   `]
 })
 export class OperationListComponent implements OnInit {
-    private operationService = inject(OperationService);
+  private operationService = inject(OperationService);
 
-    operations: OperationResponseDTO[] = [];
-    isLoading = true;
+  operations: OperationResponseDTO[] = [];
+  isLoading = true;
 
-    ngOnInit(): void {
-        this.loadOperations();
+  ngOnInit(): void {
+    this.loadOperations();
+  }
+
+  loadOperations(): void {
+    this.operationService.getMyOperations().subscribe({
+      next: (operations) => {
+        this.operations = operations.sort((a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Erreur lors du chargement des opérations', error);
+      }
+    });
+  }
+
+  getStatusClass(status: OperationStatus): string {
+    switch (status) {
+      case OperationStatus.APPROVED: return 'status-approved';
+      case OperationStatus.PENDING: return 'status-pending';
+      case OperationStatus.REJECTED: return 'status-rejected';
+      default: return '';
     }
+  }
 
-    loadOperations(): void {
-        this.operationService.getMyOperations().subscribe({
-            next: (operations) => {
-                this.operations = operations.sort((a, b) =>
-                    new Date(b.dateOperation).getTime() - new Date(a.dateOperation).getTime()
-                );
-                this.isLoading = false;
-            },
-            error: (error) => {
-                this.isLoading = false;
-                console.error('Erreur lors du chargement des opérations', error);
-            }
-        });
+  getStatusLabel(status: OperationStatus): string {
+    switch (status) {
+      case OperationStatus.APPROVED: return 'Approuvée';
+      case OperationStatus.PENDING: return 'En attente';
+      case OperationStatus.REJECTED: return 'Rejetée';
+      default: return status;
     }
-
-    getStatusClass(status: OperationStatus): string {
-        switch (status) {
-            case OperationStatus.APPROVED: return 'status-approved';
-            case OperationStatus.PENDING: return 'status-pending';
-            case OperationStatus.REJECTED: return 'status-rejected';
-            default: return '';
-        }
-    }
-
-    getStatusLabel(status: OperationStatus): string {
-        switch (status) {
-            case OperationStatus.APPROVED: return 'Approuvée';
-            case OperationStatus.PENDING: return 'En attente';
-            case OperationStatus.REJECTED: return 'Rejetée';
-            default: return status;
-        }
-    }
+  }
 }

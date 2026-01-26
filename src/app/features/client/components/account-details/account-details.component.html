@@ -1,0 +1,70 @@
+<div class="account-container">
+
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+  <!-- Erreur générale -->
+  <app-alert *ngIf="errorMessage" type="error" (close)="errorMessage = ''">
+    {{ errorMessage }}
+  </app-alert>
+
+  <!-- 1. Utilisateur possède déjà un compte -->
+  <ng-container *ngIf="!isLoading && account">
+    <h2>Votre compte bancaire</h2>
+
+    <div class="account-card">
+      <div class="account-info">
+        <p><strong>Numéro de compte :</strong> {{ account.accountNumber }}</p>
+        <p><strong>Solde :</strong> {{ account.balance | currencyFormat:account.currency }}</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-outline" routerLink="/client/operations">Voir les opérations</button>
+    </div>
+  </ng-container>
+
+  <!-- 2. Pas encore de compte -->
+  <ng-container *ngIf="!isLoading && hasNoAccount">
+
+    <div class="no-account-section" *ngIf="!showForm">
+      <h2>Bienvenue !</h2>
+      <p>Vous n'avez pas encore de compte bancaire chez Al Baraka Digital.</p>
+      <button class="btn btn-primary btn-lg" (click)="toggleCreateForm()">
+        ➕ Créer mon compte maintenant
+      </button>
+    </div>
+
+    <!-- Formulaire de création -->
+    <div class="create-form" *ngIf="showForm">
+      <h2>Création de votre compte</h2>
+
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmitCreateAccount()">
+
+        <div class="form-group">
+          <label>Numéro de compte souhaité *</label>
+          <input type="text" formControlName="accountNumber" class="form-control" placeholder="Ex: 123456789012">
+          <div class="error" *ngIf="accountForm.get('accountNumber')?.touched && accountForm.get('accountNumber')?.hasError('required')">
+            Le numéro de compte est obligatoire
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Montant initial (MAD) *</label>
+          <input type="number" formControlName="balance" class="form-control" min="0" step="0.01">
+          <div class="error" *ngIf="accountForm.get('balance')?.touched && accountForm.get('balance')?.hasError('min')">
+            Le solde initial ne peut pas être négatif
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="toggleCreateForm()">
+            Annuler
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="accountForm.invalid || isLoading">
+            Créer le compte
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</div>

@@ -312,8 +312,8 @@ export class DepositComponent implements OnInit {
     this.showSuccess = false;
 
     const operationRequest = {
-      type: OperationType.DEPOT,
-      montant: this.depositForm.value.montant,
+      type: OperationType.DEPOSIT,
+      amount: this.depositForm.value.montant,
       description: this.depositForm.value.description || undefined
     };
 

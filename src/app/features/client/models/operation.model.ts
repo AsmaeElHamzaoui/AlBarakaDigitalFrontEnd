@@ -13,19 +13,17 @@ export interface Operation {
 
 export interface OperationRequestDTO {
   type: OperationType;
-  montant: number;
-  description?: string;
-  compteDestinataireNumero?: string;
+  amount: number;
+  destinationAccountNumber?: string; // optionnel
 }
+
 
 export interface OperationResponseDTO {
   id: number;
   type: OperationType;
-  montant: number;
-  dateOperation: Date;
-  statut: OperationStatus;
-  description?: string;
-  compteDestinataireNumero?: string;
-  compteSourceNumero?: string;
-  justificatifPath?: string;
+  amount: number;
+  status: OperationStatus;
+  createdAt: string;
+  accountSource: string;
+  accountDestination?: string;
 }

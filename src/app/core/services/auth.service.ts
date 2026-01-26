@@ -35,19 +35,21 @@ export class AuthService {
   }
 
   // Login classique avec JWT
-  login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.API_URL}/login`, credentials)
-      .pipe(
-        tap(response => {
-          this.tokenService.setToken(response.token);
-          this.loadCurrentUser();
-        }),
-        catchError(error => {
-          console.error('Erreur lors de la connexion', error);
-          return throwError(() => error);
-        })
-      );
-  }
+  login(credentials: LoginRequest): Observable<any> {
+  return this.http.post<any>(`${this.API_URL}/login`, credentials)
+    .pipe(
+      tap(response => {
+        // Ici on prend le bon champ : accessToken
+        this.tokenService.setToken(response.accessToken);
+        this.loadCurrentUser();
+      }),
+      catchError(error => {
+        console.error('Erreur lors de la connexion', error);
+        return throwError(() => error);
+      })
+    );
+}
+
 
   // Login OAuth2 avec Keycloak
   loginOAuth2(credentials: LoginRequest): Observable<OAuth2LoginResponse> {

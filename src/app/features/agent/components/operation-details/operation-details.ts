@@ -17,16 +17,13 @@ import { DocumentViewerComponent } from '../document-viewer/document-viewer';
       <h2>Détails opération #{{ operation.id }}</h2>
 
       <p><strong>Type :</strong> {{ operation.type }}</p>
-      <p><strong>Montant :</strong> {{ operation.montant }}</p>
-      <p><strong>Description :</strong> {{ operation.description || '-' }}</p>
+      <p><strong>Montant :</strong> {{ operation.amount }}</p>
+      <p><strong>Status Operation :</strong> {{ operation.status || '-' }}</p>
 
       <button (click)="approve()">✅ Approuver</button>
       <button (click)="reject()">❌ Rejeter</button>
 
-      <app-document-viewer
-        *ngIf="operation.justificatifPath"
-        [operationId]="operation.id">
-      </app-document-viewer>
+   
     </div>
   `
 })

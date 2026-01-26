@@ -311,8 +311,8 @@ export class WithdrawalComponent implements OnInit {
         this.showSuccess = false;
 
         const operationRequest = {
-            type: OperationType.RETRAIT,
-            montant: this.withdrawalForm.value.montant,
+            type: OperationType.WITHDRAWAL,
+            amount: this.withdrawalForm.value.montant,
             description: this.withdrawalForm.value.description || undefined
         };
 
